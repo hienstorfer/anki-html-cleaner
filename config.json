@@ -1,0 +1,5 @@
+{
+  "note_type": "Basic",
+  "fields": ["Field1", "Field2"],
+  "allowed_tags": ["<b>", "<i>"]
+}

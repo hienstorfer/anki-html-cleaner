@@ -1,0 +1,11 @@
+{
+  "name": "Data Cleaner",
+  "version": "1.0",
+  "author": "Your Name",
+  "description": "An addon to clean data from Anki notes.",
+  "config": {
+    "note_type": "Basic",
+    "fields": ["CardID"],
+    "allowed_tags": ["<b>", "<i>"]
+  }
+}
