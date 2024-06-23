@@ -5,12 +5,14 @@ from aqt import mw
 from aqt.qt import QAction, QFileDialog
 from aqt.utils import showInfo
 from anki.notes import Note
+from aqt.browser import Browser
 
 # Load configuration
 addon_path = os.path.dirname(__file__)
 config_path = os.path.join(addon_path, "config.json")
 with open(config_path, "r") as f:
     config = json.load(f)
+
 
 # Define the data cleaning function
 def clean_data(note: Note, fields, allowed_tags):
@@ -19,16 +21,24 @@ def clean_data(note: Note, fields, allowed_tags):
     for field in fields:
         if field in note:
             content = note[field]
-            cleaned_content = tag_re.sub(lambda match: match.group(0) if allowed_tags_re.match(match.group(0)) else '', content)
+            cleaned_content = tag_re.sub(lambda match: match.group(0) if allowed_tags_re.match(match.group(0)) else '',
+                                         content)
             note[field] = cleaned_content
             note.flush()
 
+
 # Create the menu entry
 def start_cleaning():
-    selected_notes = mw.col.find_notes("tag:*")
+    browser = mw.app.activeWindow()
+    if not isinstance(browser, Browser):
+        showInfo("Please open the browser window to use this feature.")
+        return
+
+    selected_notes = browser.selected_notes()
     if not selected_notes:
         showInfo("No notes selected.")
         return
+
     note_type = config["note_type"]
     fields = config["fields"]
     allowed_tags = config["allowed_tags"]
@@ -38,18 +48,22 @@ def start_cleaning():
             clean_data(note, fields, allowed_tags)
     showInfo("Data cleaning completed.")
 
-action = QAction("Clean Data", mw)
-action.triggered.connect(start_cleaning)
-mw.form.menuTools.addAction(action)
 
-# Configurable settings
-def load_config():
-    with open(config_path, "r") as f:
-        return json.load(f)
+def on_browser_will_show_context_menu(browser: Browser, menu):
+    action = QAction("Clean Data", browser)
+    action.triggered.connect(start_cleaning)
+    menu.addAction(action)
 
-def save_config(config):
-    with open(config_path, "w") as f:
-        json.dump(config, f, indent=4)
+
+# # Configurable settings
+# def load_config():
+#     with open(config_path, "r") as f:
+#         return json.load(f)
+#
+#
+# def save_config(config):
+#     with open(config_path, "w") as f:
+#         json.dump(config, f, indent=4)
 
 # def configure_cleaning_settings():
 #     config = load_config()
@@ -68,3 +82,8 @@ def save_config(config):
 #config_action = QAction("Configure Data Cleaning", mw)
 #config_action.triggered.connect(configure_cleaning_settings)
 #mw.form.menuTools.addAction(config_action)
+
+# Connect the context menu signal to the browser
+from aqt.gui_hooks import browser_will_show_context_menu
+
+browser_will_show_context_menu.append(on_browser_will_show_context_menu)
