@@ -5,9 +5,14 @@
   "description": "An addon to clean data from Anki notes.",
   "config": {
   "note_type": "LanguageLearning05",
-  "fields": ["CardID", "HR-text1","HR-text2","HR-text3","HR-text4","HR-text5","HR-text6","HR-text7","HR-text8",
-  "ES-text1","ES-text2","ES-text3","ES-text4","ES-text5","ES-text6","ES-text7","ES-text8",
-  "FR-text1", "FR-text2","FR-text3","FR-text4","FR-text5","FR-text6","FR-text7","FR-text8","FR-text"],
+  "fields": [
+    "CardID",
+    "HR-text1","HR-text2","HR-text3","HR-text4","HR-text5","HR-text6","HR-text7","HR-text8",
+    "ES-text1","ES-text2","ES-text3","ES-text4","ES-text5","ES-text6","ES-text7","ES-text8",
+    "FR-text1", "FR-text2","FR-text3","FR-text4","FR-text5","FR-text6","FR-text7","FR-text8",
+"HR-excercise1","HR-excercise2","HR-excercise3","HR-excercise4","HR-excercise5","HR-excercise6","HR-excercise7","HR-excercise8",
+    "HR-exercise1","HR-exercise2", "HR-exercise3","HR-exercise4","HR-exercise5","HR-exercise6","HR-exercise7","HR-exercise8"
+  ],
   "allowed_tags": ["b", "i",
     "verboraiz",
     "presente-terminacionpresente",
