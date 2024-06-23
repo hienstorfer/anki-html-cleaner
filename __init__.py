@@ -51,20 +51,20 @@ def save_config(config):
     with open(config_path, "w") as f:
         json.dump(config, f, indent=4)
 
-def configure_cleaning_settings():
-    config = load_config()
-    note_type, ok = QFileDialog.getOpenFileName(mw, "Select Note Type", config["note_type"])
-    if ok:
-        config["note_type"] = note_type
-    fields, ok = QFileDialog.getOpenFileNames(mw, "Select Fields", "", "All Files (*)")
-    if ok:
-        config["fields"] = fields
-    allowed_tags, ok = QFileDialog.getOpenFileNames(mw, "Select Allowed Tags", "", "All Files (*)")
-    if ok:
-        config["allowed_tags"] = allowed_tags
-    save_config(config)
-    showInfo("Configuration saved.")
+# def configure_cleaning_settings():
+#     config = load_config()
+#     note_type, ok = QFileDialog.getOpenFileName(mw, "Select Note Type", config["note_type"])
+#     if ok:
+#         config["note_type"] = note_type
+#     fields, ok = QFileDialog.getOpenFileNames(mw, "Select Fields", "", "All Files (*)")
+#     if ok:
+#         config["fields"] = fields
+#     allowed_tags, ok = QFileDialog.getOpenFileNames(mw, "Select Allowed Tags", "", "All Files (*)")
+#     if ok:
+#         config["allowed_tags"] = allowed_tags
+#     save_config(config)
+#     showInfo("Configuration saved.")
 
-config_action = QAction("Configure Data Cleaning", mw)
-config_action.triggered.connect(configure_cleaning_settings)
-mw.form.menuTools.addAction(config_action)
+#config_action = QAction("Configure Data Cleaning", mw)
+#config_action.triggered.connect(configure_cleaning_settings)
+#mw.form.menuTools.addAction(config_action)
